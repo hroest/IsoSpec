@@ -38,7 +38,6 @@
 #include "marginalTrek++.h"
 #include "isoSpec++.h"
 #include "misc.h"
-#include "element_tables.h"
 
 
 using namespace std;
@@ -161,89 +160,11 @@ modeLProb(0.0)
     setupMarginals(isotope_masses.data(), isotope_probabilities.data());
 }
 
-unsigned int parse_formula(const char* formula, std::vector<const double*>& isotope_masses, std::vector<const double*>& isotope_probabilities, int** isotopeNumbers, int** atomCounts, unsigned int* confSize)
+unsigned int parse_formula(const char*, std::vector<const double*>&, std::vector<const double*>&, int**, int**, unsigned int*)
 {
-// This function is NOT guaranteed to be secure against malicious input. It should be used only for debugging.
-
-    string cpp_formula(formula);
-    int last_modeswitch = 0;
-    int mode = 0;
-    int pos = 0;
-    std::vector<string> elements;
-    std::vector<int> numbers;
-    while(formula[pos] != '\0')
-    {
-        if(isdigit(formula[pos]) && mode == 0)
-        {
-            elements.push_back(cpp_formula.substr(last_modeswitch, pos-last_modeswitch));
-            last_modeswitch = pos;
-            mode = 1;
-        }
-        else if(isalpha(formula[pos]) && mode == 1)
-        {
-            numbers.push_back(str_to_int(cpp_formula.substr(last_modeswitch, pos-last_modeswitch)));
-            last_modeswitch = pos;
-            mode = 0;
-        }
-        pos++;
-    }
-
-    numbers.push_back(str_to_int(cpp_formula.substr(last_modeswitch, pos)));
-
-
-    if(elements.size() != numbers.size())
-        throw invalid_argument("Invalid formula");
-
-    std::vector<int> element_indexes;
-
-    for (unsigned int i=0; i<elements.size(); i++)
-    {
-        int idx = -1;
-        for(int j=0; j<NUMBER_OF_ISOTOPIC_ENTRIES; j++)
-        {
-            if (elements[i].compare(elem_table_symbol[j]) == 0)
-            {
-                idx = j;
-                break;
-            }
-        }
-        if(idx < 0)
-            throw invalid_argument("Invalid formula");
-        element_indexes.push_back(idx);
-
-    }
-
-    vector<int> _isotope_numbers;
-
-    for(vector<int>::iterator it = element_indexes.begin(); it != element_indexes.end(); ++it)
-    {
-        int num = 0;
-        int at_idx = *it;
-        int atomicNo = elem_table_atomicNo[at_idx];
-        while(at_idx < NUMBER_OF_ISOTOPIC_ENTRIES && elem_table_atomicNo[at_idx] == atomicNo)
-        {
-            at_idx++;
-            num++;
-        }
-        _isotope_numbers.push_back(num);
-    }
-
-    for(vector<int>::iterator it = element_indexes.begin(); it != element_indexes.end(); ++it)
-    {
-        isotope_masses.push_back(&elem_table_mass[*it]);
-        isotope_probabilities.push_back(&elem_table_probability[*it]);
-    };
-
-    const unsigned int dimNumber = elements.size();
-
-    *isotopeNumbers = array_copy<int>(_isotope_numbers.data(), dimNumber);
-    *atomCounts = array_copy<int>(numbers.data(), dimNumber);
-    *confSize = dimNumber * sizeof(int);
-
-    return dimNumber;
-
+    // Stub - use OpenMS mechanisms instead of this
+    return 0;
 }
-
 
 /*
  * ----------------------------------------------------------------------------------------------------------

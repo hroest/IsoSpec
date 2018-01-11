@@ -34,7 +34,6 @@
 #include "allocator.h"
 #include "operators.h"
 #include "summator.h"
-#include "element_tables.h"
 #include "misc.h"
 
 
@@ -135,17 +134,11 @@ double* getMLogProbs(const double* probs, int isoNo)
 {
     int curr_method = fegetround();
     fesetround(FE_UPWARD);
+
     double* ret = new double[isoNo];
     for(int i = 0; i < isoNo; i++)
-    {
         ret[i] = log(probs[i]);
-        for(int j=0; j<NUMBER_OF_ISOTOPIC_ENTRIES; j++)
-            if(elem_table_probability[j] == probs[i])
-            {
-                ret[i] = elem_table_log_probability[j];
-                break;
-            }
-    }
+
     fesetround(curr_method);
     return ret;
 }
