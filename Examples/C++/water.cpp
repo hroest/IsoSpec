@@ -5,7 +5,6 @@
 int main()
 {
     IsoSpec* iso = IsoSpec::IsoFromFormula("H2O1", 0.9);
-
     iso->processConfigurationsUntilCutoff();
 
     std::cout <<  "The isotopologue set containing at least 0.9 probability has " << iso->getNoVisitedConfs() << " element(s)" << std::endl;
