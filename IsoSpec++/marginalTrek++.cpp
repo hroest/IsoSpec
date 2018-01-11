@@ -29,7 +29,6 @@
 #include <limits>
 #include <cstdlib>
 #include <fenv.h>
-#include "lang.h"
 #include "marginalTrek++.h"
 #include "conf.h"
 #include "allocator.h"

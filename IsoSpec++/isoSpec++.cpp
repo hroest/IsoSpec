@@ -31,7 +31,6 @@
 #include <string>
 #include <limits>
 #include <assert.h>
-#include "lang.h"
 #include "conf.h"
 #include "dirtyAllocator.h"
 #include "operators.h"
