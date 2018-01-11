@@ -6,4 +6,3 @@
 #include "operators.cpp"
 #include "element_tables.cpp"
 #include "misc.cpp"
-#include "tabulator.cpp"
