@@ -38,6 +38,7 @@ public:
         std::size_t seed = 0;
         for(int i = 0; i < dim; ++i )
             seed ^= conf[i] + 0x9e3779b9 + (seed << 6) + (seed >> 2);
+        std::cout << std::endl << " conf " << conf << " -> " << seed << std::endl;
         return seed;
     };
 };
@@ -52,6 +53,7 @@ public:
 
     inline bool operator()(const int* conf1, const int* conf2) const
     {
+      std::cout << " equal " << conf1 << " " << conf2 << " " << memcmp(conf1, conf2, size) << std::endl;
         return !memcmp(conf1, conf2, size);
     }
 };

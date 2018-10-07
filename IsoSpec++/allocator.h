@@ -58,6 +58,7 @@ public:
         T* currentPlace = newConf();
         copyConf<T>( conf, currentPlace, dim );
 
+        std::cout << " place of new conf " <<  currentPlace << std::endl;
         return currentPlace;
     }
 

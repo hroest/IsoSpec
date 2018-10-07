@@ -352,10 +352,16 @@ allocator(isotopeNo, tabSize)
     std::unordered_set<Conf,KeyHasher,ConfEqual> visited(hashSize,keyHasher,equalizer);
 
     Conf currentConf = allocator.makeCopy(mode_conf);
+    std::cout << " ================= currentConf " <<  " at " << currentConf << std::endl;
     if(logProb(currentConf) >= lCutOff)
     {
+        std::cout << " ------ insert currentConf " <<  " at " << currentConf << std::endl;
         configurations.push_back(allocator.makeCopy(currentConf));
         visited.insert(currentConf);
+
+        std::cout << " list of all confs ";
+        for (auto it : configurations) std::cout << it << " ";
+        std::cout << std::endl;
     }
 
     unsigned int idx = 0;
@@ -364,6 +370,7 @@ allocator(isotopeNo, tabSize)
     {
         memcpy(currentConf, configurations[idx], sizeof(int)*isotopeNo);
         idx++;
+        std::cout << "---------------------------------------------------------------------------" << std::endl;
         std::cout << " stop condition: " << idx << " vs " << configurations.size();
         std::cout << " config: " << idx << " isotopes:";
         for(unsigned int kk = 0; kk < isotopeNo; kk++ ) std::cout << "  -- " << currentConf[kk] ; 
@@ -379,31 +386,42 @@ allocator(isotopeNo, tabSize)
                     currentConf[ii]++;
                     currentConf[jj]--;
 
-                      std::cout << " will now check " << currentConf[ii] << " " << currentConf[jj] << std::endl;
+                    std::cout << " will now check " << currentConf[ii] << " " << currentConf[jj] << std::endl;
                     if (visited.count(currentConf) == 0)
                     {
                       std::cout << " check next " << currentConf[ii] << " " << currentConf[jj] << " with " << logProb(currentConf) << std::endl;
-                    if (logProb(currentConf) >= lCutOff)
-                    {
-                        visited.insert(currentConf);
-                        configurations.push_back(allocator.makeCopy(currentConf));
-                    }
-                    else
-                    {
-                      std::cout << " === skip config " << currentConf[ii] << " " << currentConf[jj] << " with " << logProb(currentConf) << std::endl;
-                    }
+                      if (logProb(currentConf) >= lCutOff)
+                      {
+                          std::cout << " ------ insert " << currentConf[ii] << " " << currentConf[jj] << " at " << currentConf << std::endl;
+                          visited.insert(currentConf);
+                          configurations.push_back(allocator.makeCopy(currentConf));
+
+                          std::cout << " list of all confs ";
+                          for (auto it : configurations) std::cout << it << " ";
+                          std::cout << std::endl;
+                      }
+                      else
+                      {
+                        std::cout << " === skip config " << currentConf[ii] << " " << currentConf[jj] << " with " << logProb(currentConf) << std::endl;
+                      }
                     }
                     else
                     {
                       std::cout << "     xx size of visisted ! " << visited.size() << std::endl;
-                      std::cout << "     xx already visited this conf! " << std::endl;
+                      std::cout << "     xx already visited this conf! " <<  visited.count(currentConf) << std::endl;
+                      if (visited.find(currentConf) != visited.end()) std::cout << "     xx is not end iterator :" << std::endl;
                       std::cout << "     xx currently stored conf:" ;
                       int * other = *visited.find(currentConf);
                       std::cout << "     xx current :" << currentConf << " vs " << other << std::endl;;
                       for(unsigned int kk = 0; kk < isotopeNo; kk++ ) std::cout << "  -- " << other[kk] ; 
                       std::cout << std::endl;
 
+                        std::cout << " list of all confs ";
+                        for (auto it : configurations) std::cout << it << " ";
+                        std::cout << std::endl;
+
                     }
+
 
 
                     currentConf[ii]--;
