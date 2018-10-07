@@ -379,6 +379,7 @@ allocator(isotopeNo, tabSize)
                     currentConf[ii]++;
                     currentConf[jj]--;
 
+                      std::cout << " will now check " << currentConf[ii] << " " << currentConf[jj] << std::endl;
                     if (visited.count(currentConf) == 0)
                     {
                       std::cout << " check next " << currentConf[ii] << " " << currentConf[jj] << " with " << logProb(currentConf) << std::endl;
