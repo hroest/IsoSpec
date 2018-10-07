@@ -364,6 +364,7 @@ allocator(isotopeNo, tabSize)
     {
         memcpy(currentConf, configurations[idx], sizeof(int)*isotopeNo);
         idx++;
+        std::cout << " stop condition: " << idx << " vs " << configurations.size();
         std::cout << " config: " << idx << " isotopes:";
         for(unsigned int kk = 0; kk < isotopeNo; kk++ ) std::cout << "  -- " << currentConf[kk] ; 
         std::cout << std::endl;
