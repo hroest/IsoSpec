@@ -91,11 +91,13 @@ modeLProb(other.modeLProb)
 
 inline void Iso::setupMarginals(const double* const * _isotopeMasses, const double* const * _isotopeProbabilities)
 {
+    std::cout << " inline void Iso::setupMarginals(const double* const * _isotopeMasses, const double* const * _isotopeProbabilities) " << std::endl;
     if (marginals == nullptr)
     {
         marginals = new Marginal*[dimNumber];
         for(int i=0; i<dimNumber;i++)
         {
+          std::cout << " set up marginal for element " << i << " with " << isotopeNumbers[i] << " isotopes "<< std::endl;
         allDim += isotopeNumbers[i];
         marginals[i] = new Marginal(
                 _isotopeMasses[i],
@@ -104,6 +106,7 @@ inline void Iso::setupMarginals(const double* const * _isotopeMasses, const doub
                 atomCounts[i]
             );
             modeLProb += marginals[i]->getModeLProb();
+          std::cout << " add probability " << marginals[i]->getModeLProb() << std::endl;
         }
     }
 
@@ -423,12 +426,15 @@ Lcutoff(_threshold <= 0.0 ? std::numeric_limits<double>::lowest() : (_absolute ?
     counter = new int[dimNumber];
     maxConfsLPSum = new double[dimNumber-1];
     marginalResults = new PrecalculatedMarginal*[dimNumber];
+    std::cout << "IsoThresholdGenerator::IsoThresholdGenerator(Iso&& iso, double _threshold, bool _absolute, int tabSize, int hashSize) " << std::endl;
 
     bool empty = false;
 
     for(int ii=0; ii<dimNumber; ii++)
     {
         counter[ii] = 0;
+        std::cout << " calcualte precalc margin for ele " << ii << " with cutoff " << exp(Lcutoff) << " / " << exp(Lcutoff - modeLProb + marginals[ii]->getModeLProb())<< std::endl;
+                                                        
         marginalResults[ii] = new PrecalculatedMarginal(std::move(*(marginals[ii])),
                                                         Lcutoff - modeLProb + marginals[ii]->getModeLProb(),
                                                         true,
@@ -469,6 +475,8 @@ bool IsoThresholdGenerator::advanceToNextConfiguration()
 
     // If we reached this point, a carry is needed
 
+    std::cout << "  ===== go carry " << std::endl;
+    std::cout << "  ===== go carry " << Lcutoff << " vs " << partialLProbs[0] << std::endl;
     int idx = 0;
 
     while(idx<dimNumber-1)

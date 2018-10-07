@@ -109,6 +109,8 @@ Conf initialConfigure(const int atomCnt, const int isotopeNo, const double* prob
 
 
     }
+        for(int ii = 0; ii<isotopeNo; ii++)
+          std::cout << " initial config  "<< ii << " : " << res[ii] << std::endl;
     return res;
 }
 
@@ -346,6 +348,7 @@ allocator(isotopeNo, tabSize)
     const KeyHasher keyHasher(isotopeNo);
     const ConfOrderMarginalDescending orderMarginal(atom_lProbs, isotopeNo);
 
+                      std::cout << " PrecalculatedMarginal::PrecalculatedMarginal(Marginal&& m,) : " << lCutOff << std::endl;
     std::unordered_set<Conf,KeyHasher,ConfEqual> visited(hashSize,keyHasher,equalizer);
 
     Conf currentConf = allocator.makeCopy(mode_conf);
@@ -361,6 +364,8 @@ allocator(isotopeNo, tabSize)
     {
         memcpy(currentConf, configurations[idx], sizeof(int)*isotopeNo);
         idx++;
+        // for(unsigned int kk = 0; kk < isotopeNo; kk++ ) std::cout << " config " << currentConf[kk] << std::endl;
+
         for(unsigned int ii = 0; ii < isotopeNo; ii++ )
             for(unsigned int jj = 0; jj < isotopeNo; jj++ )
                 if( ii != jj && currentConf[jj] > 0)
@@ -368,16 +373,22 @@ allocator(isotopeNo, tabSize)
                     currentConf[ii]++;
                     currentConf[jj]--;
 
-                    if (visited.count(currentConf) == 0 && logProb(currentConf) >= lCutOff)
+                    if (visited.count(currentConf) == 0)
+                    {
+                      // std::cout << " check next " << currentConf[ii] << " " << currentConf[jj] << " with " << logProb(currentConf) << std::endl;
+                    if (logProb(currentConf) >= lCutOff)
                     {
                         visited.insert(currentConf);
                         configurations.push_back(allocator.makeCopy(currentConf));
                     }
+                    }
+
 
                     currentConf[ii]--;
                     currentConf[jj]++;
 
                 }
+        // std::cout << " end loop with " << configurations.size() << " and idx " << idx << std::endl;
     }
 
     if(sort)
@@ -386,6 +397,7 @@ allocator(isotopeNo, tabSize)
 
     confs  = &configurations[0];
     no_confs = configurations.size();
+    std::cout << " for element, computed  " << no_confs << " configurations! with cutoff " << exp(lCutOff) << std::endl;
     lProbs = new double[no_confs+1];
     eProbs = new double[no_confs];
     masses = new double[no_confs];
@@ -396,6 +408,7 @@ allocator(isotopeNo, tabSize)
         lProbs[ii] = logProb(confs[ii]);
         eProbs[ii] = exp(lProbs[ii]);
         masses[ii] = mass(confs[ii], atom_masses, isotopeNo);
+        std::cout << "  --- mass " << masses[ii] << " : " << eProbs[ii] << std::endl;
     }
     lProbs[no_confs] = -std::numeric_limits<double>::infinity();
 }

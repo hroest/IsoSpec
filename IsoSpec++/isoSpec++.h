@@ -174,6 +174,7 @@ public:
 private:
     inline void recalc(int idx)
     {
+      std::cout << " recalc " << std::endl;
         for(; idx >=0; idx--)
         {
             partialLProbs[idx] = partialLProbs[idx+1] + marginalResults[idx]->get_lProb(counter[idx]);
