@@ -393,6 +393,15 @@ allocator(isotopeNo, tabSize)
                       std::cout << " === skip config " << currentConf[ii] << " " << currentConf[jj] << " with " << logProb(currentConf) << std::endl;
                     }
                     }
+                    else
+                    {
+                      std::cout << "     xx already visited this conf! " << std::endl;
+                      std::cout << "     xx currently stored conf:" ;
+                      int * other = *visited.find(currentConf);
+                      for(unsigned int kk = 0; kk < isotopeNo; kk++ ) std::cout << "  -- " << other[kk] ; 
+                      std::cout << std::endl;
+
+                    }
 
 
                     currentConf[ii]--;
