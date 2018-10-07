@@ -377,11 +377,15 @@ allocator(isotopeNo, tabSize)
 
                     if (visited.count(currentConf) == 0)
                     {
-                      // std::cout << " check next " << currentConf[ii] << " " << currentConf[jj] << " with " << logProb(currentConf) << std::endl;
+                      std::cout << " check next " << currentConf[ii] << " " << currentConf[jj] << " with " << logProb(currentConf) << std::endl;
                     if (logProb(currentConf) >= lCutOff)
                     {
                         visited.insert(currentConf);
                         configurations.push_back(allocator.makeCopy(currentConf));
+                    }
+                    else
+                    {
+                      std::cout << " === skip config " << currentConf[ii] << " " << currentConf[jj] << " with " << logProb(currentConf) << std::endl;
                     }
                     }
 
