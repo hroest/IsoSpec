@@ -395,6 +395,7 @@ allocator(isotopeNo, tabSize)
                     }
                     else
                     {
+                      std::cout << "     xx size of visisted ! " << visited.size() << std::endl;
                       std::cout << "     xx already visited this conf! " << std::endl;
                       std::cout << "     xx currently stored conf:" ;
                       int * other = *visited.find(currentConf);
