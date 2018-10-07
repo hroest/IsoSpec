@@ -370,7 +370,10 @@ allocator(isotopeNo, tabSize)
         std::cout << std::endl;
 
         for(unsigned int ii = 0; ii < isotopeNo; ii++ )
+        {
             for(unsigned int jj = 0; jj < isotopeNo; jj++ )
+            {
+              std::cout << " ii " << ii  << " jj "<< jj << " With curr conf " << currentConf[jj] << std::endl;
                 if( ii != jj && currentConf[jj] > 0)
                 {
                     currentConf[ii]++;
@@ -394,6 +397,8 @@ allocator(isotopeNo, tabSize)
                     currentConf[ii]--;
                     currentConf[jj]++;
 
+                }
+                }
                 }
         // std::cout << " end loop with " << configurations.size() << " and idx " << idx << std::endl;
     }
