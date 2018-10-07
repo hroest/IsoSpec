@@ -396,9 +396,9 @@ allocator(isotopeNo, tabSize)
                           visited.insert(currentConf);
                           configurations.push_back(allocator.makeCopy(currentConf));
 
-                          std::cout << " list of all confs ";
-                          for (auto it : configurations) std::cout << it << " ";
-                          std::cout << std::endl;
+                          // std::cout << " list of all confs ";
+                          // for (auto it : configurations) std::cout << it << " ";
+                          // std::cout << std::endl;
                       }
                       else
                       {
@@ -416,9 +416,9 @@ allocator(isotopeNo, tabSize)
                       for(unsigned int kk = 0; kk < isotopeNo; kk++ ) std::cout << "  -- " << other[kk] ; 
                       std::cout << std::endl;
 
-                        std::cout << " list of all confs ";
-                        for (auto it : configurations) std::cout << it << " ";
-                        std::cout << std::endl;
+                        // std::cout << " list of all confs ";
+                        // for (auto it : configurations) std::cout << it << " ";
+                        // std::cout << std::endl;
 
                     }
 
