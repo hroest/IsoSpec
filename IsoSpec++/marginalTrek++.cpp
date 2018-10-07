@@ -399,6 +399,7 @@ allocator(isotopeNo, tabSize)
                       std::cout << "     xx already visited this conf! " << std::endl;
                       std::cout << "     xx currently stored conf:" ;
                       int * other = *visited.find(currentConf);
+                      std::cout << "     xx current :" << currentConf << " vs " << other << std::endl;;
                       for(unsigned int kk = 0; kk < isotopeNo; kk++ ) std::cout << "  -- " << other[kk] ; 
                       std::cout << std::endl;
 
