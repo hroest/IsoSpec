@@ -389,7 +389,7 @@ public:
             // counter[idx]++;
             (*cntr_ptr)++;
             partialLProbs[idx] = partialLProbs[idx+1] + marginalResults[idx]->get_lProb(counter[idx]);
-            if(partialLProbs[idx] + maxConfsLPSum[idx-1] >= Lcutoff)
+            if(LIKELY(partialLProbs[idx] + maxConfsLPSum[idx-1] >= Lcutoff)) // this likely really helps gcc
             {
                 partialMasses[idx] = partialMasses[idx+1] + marginalResults[idx]->get_mass(counter[idx]);
                 partialExpProbs[idx] = partialExpProbs[idx+1] * marginalResults[idx]->get_eProb(counter[idx]);
