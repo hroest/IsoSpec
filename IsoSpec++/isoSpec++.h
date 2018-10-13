@@ -321,6 +321,10 @@ class IsoThresholdGeneratorFast: public IsoThresholdGenerator
     const double* exp_ptr;
     double* partialLProbs_first;
     double* partialLProbs_second;
+    double* partialMasses_first;
+    double* partialMasses_second;
+    double* partialeProbs_first;
+    double* partialeProbs_second;
     int* counter_first;
 
 public:
@@ -338,6 +342,14 @@ public:
       partialLProbs_first = partialLProbs;
       partialLProbs_second = partialLProbs;
       partialLProbs_second++;
+
+      partialeProbs_first = partialExpProbs;
+      partialeProbs_second = partialExpProbs;
+      partialeProbs_second++;
+
+      partialMasses_first = partialMasses;
+      partialMasses_second = partialMasses;
+      partialMasses_second++;
     }
 
     // Perform highly aggressive inling as this function is often called as while(advanceToNextConfiguration()) {}
@@ -351,8 +363,8 @@ public:
         exp_ptr++;
         if(LIKELY(*partialLProbs_first >= Lcutoff))
         {
-            partialMasses[0] = partialMasses[1] + *mass_ptr;
-            partialExpProbs[0] = partialExpProbs[1] * (*exp_ptr);
+            *partialMasses_first = *partialMasses_second + *mass_ptr;
+            *partialeProbs_first = *partialeProbs_second * (*exp_ptr);
             return true;
         }
 
