@@ -62,7 +62,7 @@ private:
     void setupMarginals(const double* const * _isotopeMasses,
                         const double* const * _isotopeProbabilities);
 public:
-    bool            disowned;       /*!< A variable showing if the Iso class was specialized by its child-class. If so, then the description of the molecules has been transfered there and Iso is a carcass class, dead as a dodo, an ex-class if you will. */
+    bool            disowned;       /*!< A variable showing if the Iso class was specialized by its child-class. If so, then the description of the molecules has been transferred there and Iso is a carcass class, dead as a dodo, an ex-class if you will. */
 protected:
     int             dimNumber;      /*!< The number of elements in the chemical formula of the molecule. */
     int*            isotopeNumbers; /*!< A table with numbers of isotopes for each element. */
@@ -73,7 +73,7 @@ protected:
     double          modeLProb;      /*!< The log-probability of the mode of the isotopic distribution. */
 
 public:
-    //! General constructror.
+    //! General constructor.
     /*!
         \param _dimNumber The number of elements in the formula, e.g. for C100H202 it would be 2, as there are only carbon and hydrogen atoms.
         \param _isotopeNumbers A table with numbers of isotopes for each element, e.g. for C100H202 it would be {2, 2}, because both C and H have two stable isotopes.
@@ -213,7 +213,7 @@ private:
     MarginalTrek**              marginalResults;            /*!< Table of pointers to marginal distributions of subisotopologues. */
     std::priority_queue<void*,std::vector<void*>,ConfOrder> pq; /*!< The priority queue used to generate isotopologues ordered by descending probability. */
     void*                       topConf;                    /*!< Most probable configuration. */
-    DirtyAllocator              allocator;                  /*!< Structure used for alocating memory for isotopologues. */
+    DirtyAllocator              allocator;                  /*!< Structure used for allocating memory for isotopologues. */
     const std::vector<double>** logProbs;                   /*!< Obtained log-probabilities. */
     const std::vector<double>** masses;                     /*!< Obtained masses. */
     const std::vector<int*>**   marginalConfs;              /*!< Obtained counts of isotopes. */
@@ -241,7 +241,7 @@ public:
             c[ccount]++;
     };
 
-    //! The move-contstructor.
+    //! The move-constructor.
     IsoOrderedGenerator(Iso&& iso, int _tabSize  = 1000, int _hashSize = 1000);
 
     //! Destructor.
@@ -252,7 +252,7 @@ public:
 
 //! The generator of isotopologues above a given threshold value.
 /*!
-    Attention: the calculated configurations are only partially ordeded and the user should not assume they will be ordered.
+    Attention: the calculated configurations are only partially ordered and the user should not assume they will be ordered.
     This algorithm computes N isotopologues in O(N) thanks to storing data in FIFO Queue.
     It is a considerable advantage w.r.t. the IsoOrderedGenerator.
 */
@@ -280,7 +280,7 @@ public:
         \param iso An instance of the Iso class.
         \param _threshold The threshold value.
         \param _absolute If true, the _threshold is interpreted as the absolute minimal peak height for the isotopologues.
-                         If false, the _threshold is the fraction of the heighest peak's probability.
+                         If false, the _threshold is the fraction of the highest peak's probability.
         \param tabSize The size of the extension of the table with configurations.
         \param hashSize The size of the hash-table used to store subisotopologues and check if they have been already calculated.
     */
