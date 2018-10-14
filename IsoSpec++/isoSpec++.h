@@ -382,17 +382,15 @@ public:
 
         while(idx<dimNumber-1)
         {
-            // counter[idx] = 0;
             *cntr_ptr = 0;
             idx++;
             cntr_ptr++;
-            // counter[idx]++;
             (*cntr_ptr)++;
-            partialLProbs[idx] = partialLProbs[idx+1] + marginalResults[idx]->get_lProb(counter[idx]);
+            partialLProbs[idx] = partialLProbs[idx+1] + marginalResults[idx]->get_lProb(*cntr_ptr);
             if(LIKELY(partialLProbs[idx] + maxConfsLPSum[idx-1] >= Lcutoff)) // this likely really helps gcc
             {
-                partialMasses[idx] = partialMasses[idx+1] + marginalResults[idx]->get_mass(counter[idx]);
-                partialExpProbs[idx] = partialExpProbs[idx+1] * marginalResults[idx]->get_eProb(counter[idx]);
+                partialMasses[idx] = partialMasses[idx+1] + marginalResults[idx]->get_mass(*cntr_ptr);
+                partialExpProbs[idx] = partialExpProbs[idx+1] * marginalResults[idx]->get_eProb(*cntr_ptr);
                 recalc(idx-1);
                 return true;
             }
